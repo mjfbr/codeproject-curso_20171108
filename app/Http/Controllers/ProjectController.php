@@ -2,14 +2,21 @@
 
 namespace CodeProject\Http\Controllers;
 
-//use CodeProject\Entities\Client;
+use CodeProject\Http\Requests;
 use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Repositories\ProjectTaskRepository;
 use CodeProject\Services\ProjectService;
-//use CodeProject\Repositories\ClientRepositoryEloquent;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use LucaDegasperi\OAuth2Server\Exceptions\NoActiveAccessTokenException;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+use Prettus\Validator\Exceptions\ValidatorException;
 
-//use CodeProject\Http\Requests;
+
 //use CodeProject\Http\Controllers\Controller;
+//use CodeProject\Entities\Client;
+//use CodeProject\Repositories\ClientRepositoryEloquent;
 
 class ProjectController extends Controller
 {
@@ -28,9 +35,12 @@ class ProjectController extends Controller
     * @param  ProjectService $service
     */
 
-    public function __construct(ProjectRepository $repository, ProjectService $service) {
+    public function __construct(ProjectRepository $repository, ProjectService $service, ProjectTaskRepository $taskRepository) {
         $this->repository = $repository;
         $this->service = $service;
+        $this->taskRepository = $taskRepository;        
+        $this->middleware('check.project.owner', ['except' => ['index', 'store', 'show']]);
+        $this->middleware('check.project.permission', ['except' => ['index', 'store', 'update', 'destroy']]);
     }
 
     /**
@@ -38,13 +48,14 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //return \CodeProject\Client::all();
         //return ClientRepositoryEloquent::all();
         //return $repository->all();
-        return $this->repository->all();
+        //return $this->repository->all();
         //return $this->repository->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
+        return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId());
     }
 
     /**
@@ -73,7 +84,7 @@ class ProjectController extends Controller
         //return Client::find($id);
         //return ['userId' => \Authorizer::getResourceOwnerId()];
         //if ($this->checkProjectOwner($id) == false) {
-        if($this->checkProjectPermissions($id) == false) {
+        if($this->service->checkProjectPermissions($id) == false) {
             return ['error' => 'Access Forbidden'];
         }     
         return $this->repository->find($id);
@@ -86,14 +97,15 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(Request $request, $id)
     {
-        if ($this->checkProjectOwner($id) == false) {
+        if ($this->service->checkProjectOwner($id) == false) {
             return ['error' => 'Access Forbidden'];
         }         
         return $this->service->update($request->all(), $id);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -102,14 +114,16 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->checkProjectOwner($id) == false) {
+        if ($this->service->checkProjectOwner($id) == false) {
             return ['error' => 'Access Forbidden'];
         }         
         //return \CodeProject\Client::find($id)->delete();        
         //return Client::find($id)->delete();
-        return $this->repository->delete($id);
+        //return $this->repository->delete($id);
+        $this->repository->delete($id);
     }
 
+    /*
     private function checkProjectOwner($projectId) {
         //$projectId = $request->project;
         $userId = \Authorizer::getResourceOwnerId();  
@@ -119,8 +133,8 @@ class ProjectController extends Controller
                 return ['error' => 'Access forbidden'];
             }
             */        
+    /*
     } 
-
     private function checkProjectMember($projectId) {
         
         $userId = \Authorizer::getResourceOwnerId();  
@@ -132,5 +146,6 @@ class ProjectController extends Controller
             return true;
         }
         return false;
-    }    
+    } 
+    */   
 }

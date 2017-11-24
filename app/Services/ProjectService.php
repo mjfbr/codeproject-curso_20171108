@@ -8,9 +8,9 @@ use Prettus\Validator\Exceptions\ValidatorException;
 
 //use Illuminate\Support\Facades\Storage;
 //use Illuminate\Support\Facades\File;
+//use Illuminate\Contracts\Filesystem\Factory as Storage;
+//use Illuminate\Filesystem\Filesystem;
 //use Illuminate\Support\Facades\Filesystem;
-use Illuminate\Contracts\Filesystem\Factory as Storage;
-use Illuminate\Filesystem\Filesystem;
 
 class ProjectService {
 	
@@ -25,20 +25,21 @@ class ProjectService {
 	private $validator;
 
 	/**
-	* @var Filesystem
+	* @ var Filesystem
 	*/
-	private $filesystem;
+	//private $filesystem;
 
 	/**
-	* @var Storage
+	* @ var Storage
 	*/
-	private $storage;
+	//private $storage;
 
-	public function __construct(ProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage) {
+	//public function __construct(ProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage) {
+	public function __construct(ProjectRepository $repository, ProjectValidator $validator) {
 		$this->repository = $repository;
 		$this->validator = $validator;
-		$this->filesystem = $filesystem;
-		$this->storage = $storage;
+		//$this->filesystem = $filesystem;
+		//$this->storage = $storage;
 	}
 
 	public function create(array $data) {
@@ -66,7 +67,7 @@ class ProjectService {
 			]; 
 		}
 	}
-
+	/*
 	public function createFile(array $data) {
 		//Storage::put($data['name'].".".$data['extension'], File::get($data['file']));
 		//$project = $this->repository->find($data['project_id']);
@@ -77,4 +78,31 @@ class ProjectService {
 
 		$this->storage->put($projectFile->id.".".$data['extension'], $this->filesystem->get($data['file']));
 	} 
+	*/
+
+    public function checkProjectOwner($projectId) {
+        
+        //$projectId = $request->project;
+        $userId = \Authorizer::getResourceOwnerId();  
+        return $this->repository->isOwner($projectId, $userId);
+            /*
+            if($this->repository->isOwner($projectId, $userId) == false) {
+                return ['error' => 'Access forbidden'];
+            }
+            */        
+    } 
+    
+    public function checkProjectMember($projectId) {
+        
+        $userId = \Authorizer::getResourceOwnerId();  
+        return $this->repository->hasMember($projectId, $userId);
+    }    
+
+    public function checkProjectPermissions($projectId) {
+       
+        if($this->checkProjectOwner($projectId) or $this->checkProjectMember($projectId)) {
+            return true;
+        }
+        return false;
+    }
 }

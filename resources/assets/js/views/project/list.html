@@ -2,35 +2,56 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Listagem de Projetos</div>
+                <div class="panel-heading">Listagem de Projetos 2</div>
                 <div class="panel-body">
                     <a href="#/projects/new" class="btn btn-primary">NOVO</a>
+                    <br><br>
+
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="show">Mostrar dados Completos</label>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Client</th>
-                                <th>Progress</th>
-                                <th>Status</th>
-                                <th>Due date</th>
+                                <th ng-show="show">Dados Completos</th>
+                                <th ng-hide="show">Id</th>
+                                <th ng-hide="show">Name</th>
+                                <th ng-hide="show">Client</th>
+                                <th ng-hide="show">Progress</th>
+                                <th ng-hide="show">Status</th>
+                                <th ng-hide="show">Due date</th>
 
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="o in projects">
-                                <td>{{o.name}}</td>
-                                <td>{{o.client.data.name}}</td>
-                                <td>{{o.progress}}</td>
-                                <td>{{o.status}}</td>
-                                <td>{{o.due_date | dateBr}}</td>
+                            <tr ng-repeat="o in projects | orderBy:'-id'">
+                                <!-- mostra conteudo tudo junto -->
+                                <td ng-show="show" >
+                                    <dl class="dl-horizontal">
+                                        <dt>ID: </dt>       <dd> {{o.id}}</dd>
+                                        <dt>Name: </dt>     <dd> {{o.name}}</dd>
+                                        <dt>Client: </dt>   <dd> {{o.client.data.name}}</dd>
+                                        <dt>Progress: </dt> <dd> {{o.progress}}%</dd>
+                                        <dt>Status: </dt>   <dd> {{o.status}}</dd>
+                                        <dt>Due Date: </dt> <dd> {{o.due_date | dateBr}}</dd>
+                                        <dt>Description: </dt> <dd> {{o.description}}</dd>
+                                    </dl>
+                                </td>
+                                <td ng-hide="show">{{o.id}}</td>
+                                <td ng-hide="show">{{o.name}}</td>
+                                <td ng-hide="show">{{o.client.data.name}}</td>
+                                <td ng-hide="show">{{o.progress}}%
+                                    <div class="progress">
+                                          <div class="progress-bar" role="progressbar" aria-valuenow="{{o.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{o.progress}}%">
+                                            {{o.progress}}%
+                                          </div>
+                                    </div>
+                                </td>
+                                <td ng-hide="show">{{o.status}}</td>
+                                <td ng-hide="show">{{o.due_date | dateBr}}</td>
                                 <td>
-                                    <a ng-href="#/project/{{o.id}}/edit">
-                                        Editar
-                                    </a> | 
-                                    <a ng-href="#/project/{{o.id}}/remove">
-                                        Excluir
-                                    </a>
+                                    <a ng-href="#/projects/{{o.id}}/edit" class="btn btn-block btn-xs btn-success"><span class="glyphicon glyphicon-retweet"></span> Editar</a>
+         
+                                    <a ng-href="#/project/{{o.id}}/remove" class="btn btn-block btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir</a>
                                 </td>
                             </tr>
                         </tbody>

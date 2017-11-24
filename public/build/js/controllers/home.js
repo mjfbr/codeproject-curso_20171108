@@ -1,10 +1,10 @@
 angular.module('app.controllers')
-    .controller('HomeController',['$scope', '$cookies', function($scope, $cookies ){
-        console.log($cookies.getObject('user').email);
+	.controller('HomeController',['$scope','$cookies',function($scope,$cookies){
+		console.log($cookies.getObject('user').email);
+		console.log($cookies.getObject('user').name);
+	}]);
 
-    }]);
-
-/* original
+/*
 angular.module('app.controllers')
 	.controller('HomeController',['$scope',function($scope){
 

@@ -53,12 +53,15 @@ class ProjectNoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //return \CodeProject\Client::create($request->all());
         //return Client::create($request->all());
         //return $this->repository->create($request->all());
-        return $this->service->create($request->all());
+        //return $this->service->create($request->all());
+        $data = $request->all();
+        $data['project_id'] = $id;
+        return $this->service->create($data);
     }
 
     /**
@@ -67,12 +70,19 @@ class ProjectNoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $noteId)
+    public function show($id, $idNote)
     {
         //return \CodeProject\Client::find($id);
         //return Client::find($id);
         //return $this->repository->find($id);
-        return $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
+        //return $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
+        $result = $this->repository->findWhere(['project_id' => $id, 'id' => $idNote]);
+        if (isset($result['data']) && count($result['data']) === 1) {
+            $result = [
+                'data' => $result['data'][0]
+            ];
+        }
+        return $result;        
     }
 
     /**
@@ -82,12 +92,11 @@ class ProjectNoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-    public function update(Request $request, $id)
-    //public function update(Request $request, $id, $noteId)
+    public function update(Request $request, $id, $noteId)
     {
-        return $this->service->update($request->all(), $id);
-        //return $this->service->update($request->all(), $noteId);        
+        $data = $request->all();
+        $data['project_id'] = $id;
+        return $this->service->update($data, $noteId);
     }
 
     /**
@@ -96,15 +105,16 @@ class ProjectNoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    //public function destroy($id, $noteId)
+    public function destroy($id, $noteId)
     {
         //return \CodeProject\Client::find($id)->delete();        
         //return Client::find($id)->delete();
-        //return $this->repository->delete($id);
-        //return $this->repository->delete($noteId);
-        if ($this->repository->delete($id)){
+        //return $this->repository->delete($noteId);        
+        /*
+        if($this->repository->delete($id)) {
             return ['success' => true];
         }
+        */
+        $this->repository->delete($noteId);
     }
 }

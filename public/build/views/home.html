@@ -1,7 +1,4 @@
-Estamos logados
-<br>
-Somente irá aparecer o menu completo abaixo se o usuário for <strong>user1</strong>
-
+<div class="container" >Estamos logados</div><br>
 
 <!--
 <div ng-controller="MenuController">
@@ -9,46 +6,65 @@ Somente irá aparecer o menu completo abaixo se o usuário for <strong>user1</st
 	 	<strong>Usuário logado: </strong> {{user.name}}.
 	</div>
 	<br>
-	<div ng-if="user.name=='user1'">
+	<div ng-if="user.name=='user1' || user.name=='user3'">
+
 		<a href="#/clients" class="btn btn-primary">CLIENTE</a><br>
 		<a href="#/projects" class="btn btn-primary">PROJECTS</a><br>
 		<a href="#/project/1/notes" class="btn btn-primary">PROJECT NOTE</a><br>
 		
 	</div>
 		<a href="#/project/1/files" class="btn btn-primary">UPLOAD</a><br>
-</div>
+	<div ng-if="user.name!=='user1' && user.name!=='user3'">
 
+
+			<br>
+			Somente irá aparecer o menu completo abaixo se o usuário for <strong>user1</strong>
+
+			<div class="alert alert-danger">
+				<strong>Usuário não permitido </strong><br><hr>
+				<strong>Usuário: </strong> {{user.name}}<br>
+				<strong>Login utilizado: </strong>{{user.email}}
+			</div>
+
+	</div>
+</div>
 -->
+
 
 
 
 <div class="container" ng-controller="MenuController">
 	<div ng-switch="user.name">
-		<!-- aqui define o usuário permitido pode ver no conteúdo em "ng-switch-when="user1"-->
+	
 		<div ng-switch-when="user1">
 
 			<div class="alert alert-info">
-			 	Seja bem vindo <strong>{{user.name}} </strong>
+				Seja bem vindo <strong>{{user.name}} </strong>
 			</div>
 
-		    <div class="row">
-		        <div class="col-md-11">
-		            <ul class="nav nav-pills nav-stacked">
-		                <li><a href="#/clients"><i class="fa fa-home fa-fw"></i>CLIENTE</a></li>
-		                <li><a href="#/projects"><i class="fa fa-home fa-fw"></i>PROJECTS</a></li>
-		                <li><a href="#/project/1/notes"><i class="fa fa-home fa-fw"></i>PROJECTS NOTE</a></li>
-		                <li><a href="#/project/1/files"><i class="fa fa-home fa-fw"></i>PROJECTS FILE</a></li>
-		                <li><a href="#/project/1/tasks"><i class="fa fa-home fa-fw"></i>TASKS</a></li>
-		            </ul>
-		        </div>
-		    </div>
-		</div>
-		<!-- aqui define oq o usuário não permitido irá ver-->
-		<div ng-switch-default>
-			<div class="alert alert-danger">
-			 	<strong>Usuário não permitido </strong><br><hr>
-			 	<strong>Usuário: </strong> {{user.name}}<br>
-			 	<strong>Login utilizado: </strong>{{user.email}}
+			<div class="row">
+				<div class="col-md-11">
+					<ul class="nav nav-pills nav-stacked">
+						<li><a href="#/clients"><i class="fa fa-home fa-fw"></i>CLIENTE</a></li>
+						<li><a href="#/projects"><i class="fa fa-home fa-fw"></i>PROJECTS</a></li>
+						<li><a href="#/project/1/notes"><i class="fa fa-home fa-fw"></i>PROJECTS NOTE</a></li>
+						<li><a href="#/project/1/files"><i class="fa fa-home fa-fw"></i>PROJECTS FILE</a></li>
+						<li><a href="#/project/1/tasks"><i class="fa fa-home fa-fw"></i>TASKS</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
+		
+		<div ng-switch-default>
+
+			<br>
+			Somente irá aparecer o menu completo abaixo se o usuário for <strong>user1</strong>
+
+			<div class="alert alert-danger">
+				<strong>Usuário não permitido </strong><br><hr>
+				<strong>Usuário: </strong> {{user.name}}<br>
+				<strong>Login utilizado: </strong>{{user.email}}
+			</div>
+		</div>
+	</div>
 </div>

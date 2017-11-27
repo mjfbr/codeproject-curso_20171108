@@ -30,7 +30,7 @@ angular.module('app.services')
                             month = parseInt(arrayDate[1])-1;
                         o.start_date = new Date(arrayDate[0], month, arrayDate[2]);
                     }
-                     if (o.hasOwnProperty ('due_date') && o.due_date){
+                    if (o.hasOwnProperty ('due_date') && o.due_date){
                         var arrayDate = o.due_date.split('-'),
                             month = parseInt(arrayDate[1])-1;
                         o.due_date = new Date(arrayDate[0], month, arrayDate[2]);

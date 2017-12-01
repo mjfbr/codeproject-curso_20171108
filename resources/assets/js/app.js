@@ -1,6 +1,8 @@
 var app = angular.module('app',[
 	'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
-	'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker','ui.bootstrap.tpls','ngFileUpload'
+	'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker','ui.bootstrap.tpls','ui.bootstrap.modal',
+	'ngFileUpload','http-auth-interceptor', 'angularUtils.directives.dirPagination',
+	'mgcrea.ngStrap.navbar','ui.bootstrap.dropdown'
 	]);
 
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
@@ -39,7 +41,7 @@ app.provider('appConfig', ['$httpParamSerializerProvider',function($httpParamSer
 				if(headersGetter['content-type'] == 'application/json' ||
 					headersGetter['content-type'] == 'text/json'){
 					var dataJson = JSON.parse(data);
-					if(dataJson.hasOwnProperty('data')){
+					if(dataJson.hasOwnProperty('data') && Object.keys(dataJson).length == 1){
 						dataJson = dataJson.data;
 					}
 					return dataJson;
@@ -64,6 +66,8 @@ app.config([
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;carset=utf-8';
 		$httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
 		$httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
+		$httpProvider.interceptors.splice(0,1);
+		$httpProvider.interceptors.splice(0,1);
 		$httpProvider.interceptors.push('oauthFixInterceptor');
 	$routeProvider
 		.when('/login',{
@@ -118,8 +122,8 @@ app.config([
 			templateUrl: 'build/views/project/remove.html',
 			controller: 'ProjectRemoveController'
 		})
-
-		// ------------ PojectsNote ------------
+				
+			// ------------ PojectsNote ------------
 		.when('/project/:id/notes',{
 			templateUrl: 'build/views/project-note/list.html',
 			controller: 'ProjectNoteListController'
@@ -186,6 +190,12 @@ app.config([
 			templateUrl: 'build/views/project-member/remove.html',
 			controller: 'ProjectMemberRemoveController'
 		})
+
+		// ------------ almoxproduto - Almoxarifado ------------
+		.when('/almoxprodutos',{
+			templateUrl: 'build/views/almoxproduto/list.html',
+			controller: 'AlmoxProdutoListController'
+		})
 		;
 
 	OAuthProvider.configure({
@@ -204,7 +214,8 @@ app.config([
 	});
 }]);
 
-app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $location, $http, OAuth) {
+app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer','OAuth', 
+	function ($rootScope, $location, $http, $modal, httpBuffer,OAuth) {
 	
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 		if(next.$$route.originalPath != '/login') {
@@ -222,11 +233,15 @@ app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $loc
 
 		// Refresh token when a `invalid_token` error occurs.
 		if ('access_denied' === data.rejection.data.error) {
-			return OAuth.getRefreshToken().then(function (response) {
-				return $http(data.rejection.config).then(function(response){
-					return data.deferred.resolve(response);
+			httpBuffer.append(data.rejection.config, data.deferred);
+			if(!$rootScope.loginModalOpened){
+				var modalInstance = $modal.open({
+					templateUrl: 'build/views/templates/loginModal.html',
+					controller: 'LoginModalController'
 				});
-			});
+				$rootScope.loginModalOpened = true;
+			}
+			return;
 		}
 
 		// Redirect to `/login` with the `error_reason`.

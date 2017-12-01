@@ -16,10 +16,15 @@
                             <div class="panel-body">
                                 <a href="#/clients/new" class="btn btn-primary">NOVO</a>
                                 <table class="table">
+                                    <input type="text" name="" ng-model="search" class="form-control" placeholder="Busca">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
+                                            <th ng-click="sort('id')">ID
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse, 'glyphicon-chevron-down':!reverse}"><span>
+                                            </th>
+                                            <th ng-click="sort('name')">NAME
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse, 'glyphicon-chevron-down':!reverse}"><span>
+                                            </th>
                                             <th>Responsible</th>
                                             <th>E-mail</th>
                                             <th>Phone</th>
@@ -27,7 +32,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="o in clients | orderBy:'-id'">
+                                        <tr ng-repeat="o in clients| filter:search | orderBy:sortKey:reverse">
                                             <td>{{o.id}}</td>
                                             <td>{{o.name}}</td>
                                             <td>{{o.responsible}}</td>

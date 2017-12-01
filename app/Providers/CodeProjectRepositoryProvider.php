@@ -47,5 +47,10 @@ class CodeProjectRepositoryProvider extends ServiceProvider
             \CodeProject\Repositories\ProjectNoteRepository::class,
             \CodeProject\Repositories\ProjectNoteRepositoryEloquent::class
         );
+        
+        $this->app->bind(
+            \CodeProject\Repositories\AlmoxProdutoRepository::class,
+            \CodeProject\Repositories\AlmoxProdutoRepositoryEloquent::class
+        );        
     }
 }

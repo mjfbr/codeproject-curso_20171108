@@ -6,13 +6,29 @@
                 <div class="panel-body">
                     <a href="#/projects/new" class="btn btn-primary">NOVO</a>
                     <br><br>
+                    
+                    <!--<input type="number" name="" ng-model="projectsPerPage" class="form-control">-->
+
+                    <select class="form-control" ng-model="projectsPerPage">
+                        <option ng-model="projectsPerPage" value="5" selected>5</option>
+                        <option ng-model="projectsPerPage" value="10">10</option>
+                        <option ng-model="projectsPerPage" value="50">50</option>
+                        <option ng-model="projectsPerPage" value="999999">Mostrar todos os registros</option>
+                    </select>
+
+                    <hr>
+                    
+                    <input type="text" name="" ng-model="search" class="form-control" placeholder="Busca">
 
                     <label class="checkbox-inline"><input type="checkbox" ng-model="show">Mostrar dados Completos</label>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th ng-show="show">Dados Completos</th>
-                                <th ng-hide="show">Id</th>
+                                <th ng-click="sort('id')">ID
+                                                <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse, 'glyphicon-chevron-down':!reverse}"><span>
+                                            </th>
+                                
                                 <th ng-hide="show">Name</th>
                                 <th ng-hide="show">Client</th>
                                 <th ng-hide="show">Progress</th>
@@ -23,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="o in projects | orderBy:'-id'">
+                            <tr dir-paginate="o in projects | itemsPerPage: projectsPerPage | filter:search | orderBy:sortKey:reverse" total-items="totalProjects" current-page="pagination.current">
                                 <!-- mostra conteudo tudo junto -->
                                 <td ng-show="show" >
                                     <dl class="dl-horizontal">
@@ -56,6 +72,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
                 </div>
             </div>
         </div>

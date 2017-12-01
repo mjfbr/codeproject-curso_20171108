@@ -18,6 +18,8 @@ Route::group(['middleware'=>'oauth'], function(){
 
     Route::resource('project', 'ProjectController', ['except'=>['create','edit']]);
 
+    Route::resource('almoxproduto', 'AlmoxProdutoController', ['except'=>['create','edit']]);
+
     Route::resource('project.member', 'ProjectMemberController', ['except'=>['create','edit','update']]);
 
 

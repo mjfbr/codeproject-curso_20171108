@@ -27,6 +27,8 @@ config.vendor_path_js = [
 	config.bower_path + '/query-string/query-string.js',
 	config.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js',
 	config.bower_path + '/ng-file-upload/ng-file-upload.min.js',
+	config.bower_path + '/angular-http-auth/src/http-auth-interceptor.js',
+	config.bower_path + '/angularUtils-pagination/dirPagination.js',
 ];
 
 config.build_path_css = config.build_path + '/css';
@@ -97,7 +99,7 @@ gulp.task('default',['clear-build-folder'], function(){
 	elixir(function(mix){
 		mix.styles(config.vendor_path_css.concat([config.assets_path + '/css/**/*.css']),
 			'public/css/all.css',config.assets_path);
-		mix.scripts(config.vendor_path_css.concat([config.assets_path + '/js/**/*.js']),
+		mix.scripts(config.vendor_path_js.concat([config.assets_path + '/js/**/*.js']),
 			'public/js/all.js',config.assets_path);
 		mix.version(['js/all.js','css/all.css'])
 	});

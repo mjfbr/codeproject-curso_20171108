@@ -3,4 +3,10 @@ angular.module('app.controllers')
 		$scope.clients=Client.query();
 		$scope.user = $cookies.getObject('user');
 
+		//para ordenar
+		$scope.sort = function(keyname){
+			$scope.sortKey = keyname;
+			$scope.reverse = !$scope.reverse;
+		}
+
 	}]);

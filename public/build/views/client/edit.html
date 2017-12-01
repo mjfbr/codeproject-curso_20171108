@@ -1,12 +1,12 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Edição de client</div>
-                <div class="panel-body">
-
-                    <form class="form-horizontal" name="form" role="form" method="POST" ng-submit="save()">
-                        <div class="form-group">
+        <form class="form-horizontal" name="form" role="form" method="POST" ng-submit="save()">
+            <div class="col-md-8 col-md-offset-2">
+                {{user.name}}
+                <div class="panel panel-default" ng-if="user.name=='user1'">
+                    <div class="panel-heading">Edição de client</div>
+                        <div class="panel-body">
+                            <div class="form-group">
                             <label class="col-md-4 control-label">ID</label>
 
                             <div class="col-md-6">
@@ -85,9 +85,22 @@
                                 <a href="javascript:window.history.go(-1)" class="btn btn-primary">Voltar</a>
                             </div>
                         </div>
-                    </form>
+
+                    </div>
                 </div>
+                <!-- se o usuário não estiver logado -->
+                <div ng-if="user.name!=='user1'">
+                    <br>
+                    Somente irá aparecer o menu completo abaixo se o usuário for <strong>user1</strong>
+
+                    <div class="alert alert-danger">
+                        <strong>Usuário não permitido </strong><br><hr>
+                        <strong>Usuário: </strong> {{user.name}}<br>
+                        <strong>Login utilizado: </strong>{{user.email}}
+                    </div>
+                </div>
+                <!-- se o usuário não estiver logado -->
             </div>
-        </div>
+        </form>
     </div>
 </div>

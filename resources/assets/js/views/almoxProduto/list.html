@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Listagem de Produtos do almoxarifado</div>
+                <div class="panel-body">
+                    <a href="#/projects/new" class="btn btn-primary">NOVO</a>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th ng-hide="show">id</th>
+                                <th ng-hide="show">tipo</th>
+                                <th ng-hide="show">descricao</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="o in almoxprodutos | itemsPerPage: projectsPerPage | orderBy:sortKey:reverse" total-items="totalProjects" current-page="pagination.current">
+                                <!-- mostra conteudo tudo junto -->
+
+                                <td ng-hide="show">{{o.id}}</td>
+                                <td ng-hide="show">{{o.tipo}}</td>
+                                <td ng-hide="show">{{o.descricao}}</td>
+                                <td>
+                                    <a ng-href="#/projects/{{o.id}}/edit" class="btn btn-block btn-xs btn-success"><span class="glyphicon glyphicon-retweet"></span> Editar</a>
+         
+                                    <a ng-href="#/project/{{o.id}}/remove" class="btn btn-block btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

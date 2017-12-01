@@ -6,6 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use CodeProject\Repositories;
 use CodeProject\Entities\Client;
 use CodeProject\Presenters\ClientPresenter;
+use Prettus\Repository\Criteria\RequestCriteria;
 
 class ClientRepositoryEloquent extends BaseRepository implements ClientRepository {
 

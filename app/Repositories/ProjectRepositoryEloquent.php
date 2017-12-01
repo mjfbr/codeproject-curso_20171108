@@ -2,12 +2,12 @@
 
 namespace CodeProject\Repositories;
 
-use CodeProject\Validators\ClientValidator;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Entities\Project;
 use CodeProject\Presenters\ProjectPresenter;
+use CodeProject\Validators\ClientValidator;
 //use CodeProject\Validators\ProjectValidator;
 
 /**
@@ -37,7 +37,6 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
     }
 
     public function isOwner($projectId, $userId) {
-
         if(count($this->skipPresenter()->findWhere(['id' => $projectId, 'owner_id' => $userId]))) {
             return true;
         }
@@ -45,7 +44,6 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
     }
 
     public function hasMember($projectId, $memberId) {
-
         $project = $this->skipPresenter()->find($projectId);
 
         foreach ($project->members as $member) {
@@ -56,8 +54,16 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
         return false;
     }
 
-    public function findWithOwnerAndMember($userId) {
+    public function findOwner($userId, $limit = null, $columns = array()) {
+        return $this->scopeQuery(function($query) use($userId) {
+            return $query->select('projects.*')
+                ->where('owner_id', '=', $userId)
+                ->orderBy('id', 'DESC');
+        })->paginate($limit, $columns);
+    }
 
+    /*
+    public function findWithOwnerAndMember($userId) {
         return $this->scopeQuery(function($query) use($userId) {
             return $query->select('projects.*')
                 ->leftJoin('project_members', 'project_members.project_id', '=', 'projects.id')
@@ -65,6 +71,7 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
                 ->union($this->model->query()->getQuery()->where('owner_id', '=', $userId));
         })->all();
     }
+    */
 
     public function presenter() {
         return ProjectPresenter::class;

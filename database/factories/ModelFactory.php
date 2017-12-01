@@ -50,3 +50,15 @@ $factory->define(CodeProject\Entities\ProjectNote::class, function (Faker\Genera
         'note' => $faker->paragraph, 
     ];
 });
+
+$factory->define(CodeProject\Entities\AlmoxProduto::class, function (Faker\Generator $faker) {
+    return [
+        'tipo' => rand(1, 6),
+        'descricao'=> $faker->text,
+        'unidade' => $faker->text,
+        'proporcao' => rand(1, 10),
+        'valor' => rand(1, 100),
+        'tmd' => $faker->text,  
+        'barcode' => $faker->text,
+    ];
+});

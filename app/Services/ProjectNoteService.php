@@ -1,8 +1,11 @@
 <?php
+
 namespace CodeProject\Services;
+
 use CodeProject\Repositories\ProjectNoteRepository;
 use CodeProject\Validators\ProjectNoteValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
+
 class ProjectNoteService
 {
     protected $repository;

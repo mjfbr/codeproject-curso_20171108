@@ -1,9 +1,9 @@
 angular.module('app.controllers')
-	.controller('ProjectNewController',
-	['$scope','$location','$cookies','Project','Client','appConfig',
-	function($scope, $location,$cookies,Project,Client,appConfig){
-		$scope.project = new Project();
-		$scope.status = appConfig.project.status;
+	.controller('AlmoxProdutoNewController',
+	['$scope','$location','$cookies','AlmoxProduto','Client','appConfig',
+	function($scope, $location,$cookies,AlmoxProduto,Client,appConfig){
+		$scope.almoxProduto = new AlmoxProduto();
+		$scope.status = appConfig.almoxProduto.status;
 
 		$scope.due_date = {
 			status:{
@@ -17,9 +17,9 @@ angular.module('app.controllers')
 
 		$scope.save = function(){
 			if($scope.form.$valid){
-				$scope.project.owner_id = $cookies.getObject('user').id;
-				$scope.project.$save().then(function(){
-					$location.path('/projects');
+				$scope.almoxProduto.owner_id = $cookies.getObject('user').id;
+				$scope.almoxProduto.$save().then(function(){
+					$location.path('/almoxprodutos');
 				});
 			}
 		}

@@ -4,7 +4,7 @@ angular.module('app.controllers')
 		
 		$scope.almoxProdutos = [];
 		$scope.totalAlmoxProdutos = 0;
-		$scope.almoxProdutosPerPage = 5;
+		$scope.almoxProdutosPerPage = 10;
 
 		$scope.pagination = {
 			current: 1

@@ -93,6 +93,9 @@
 
 	<!-- CONTROLLERS almoxproduto - almoxarifado !-->
 	<script src="{{asset('build/js/controllers/almoxProduto/almoxprodutoList.js')}}"></script>
+	<script src="{{asset('build/js/controllers/almoxProduto/almoxprodutoRemove.js')}}"></script>
+	<script src="{{asset('build/js/controllers/almoxProduto/almoxprodutoEdit.js')}}"></script>
+	<script src="{{asset('build/js/controllers/almoxProduto/almoxprodutoNew.js')}}"></script>
 
 
 

@@ -10,12 +10,12 @@ angular.module('app.services')
 			}
 			return data;
 		}
-		return $resource(appConfig.baseUrl + '/project/:id',{id: '@id'},{
+		return $resource(appConfig.baseUrl + '/almoxproduto/:id',{id: '@id'},{
 			save: {
 				method: 'POST',
 				transformRequest: transformData
 			},
-			/*get: {
+			get: {
 				method: 'GET',
 				transformResponse: function(data, headers){
 					var o = appConfig.utils.transformResponse(data, headers);
@@ -26,7 +26,7 @@ angular.module('app.services')
 					}
 					return o;
 				}
-			},*/
+			},
 			query:{
 				isArray: false
 			},

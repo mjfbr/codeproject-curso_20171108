@@ -9,6 +9,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class AlmoxProduto extends Model
 {
+    use TransformableTrait;
 	protected $table = 'crm_almox_produto';
     protected $fillable = [
         'id',
@@ -22,7 +23,8 @@ class AlmoxProduto extends Model
     	'barcode'
     ];
 
-public function client()
+
+    public function client()
     {
         return $this->belongsTo(Client::class);
     }
@@ -42,4 +44,5 @@ public function client()
     {
         return $this->hasMany(ProjectTask::class);
     }
+
 }

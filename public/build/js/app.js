@@ -26,6 +26,16 @@ app.provider('appConfig', ['$httpParamSerializerProvider',function($httpParamSer
 				{value: 2, label: 'Completa'}
 			]
 		},
+		almoxProduto:{
+			status: [
+				{value: 1, label: 'Descartável'},
+				{value: 2, label: 'Aula pratica consumo'},
+				{value: 3, label: 'Aula Prática Permanente'},
+				{value: 4, label: 'Marketing'},
+				{value: 5, label: 'Material'},
+				{value: 6, label: 'Coffee Break'}
+			]
+		},
 		urls:{
 			projectFile: '/project/{{id}}/file/{{idFile}}',
 		},
@@ -195,6 +205,18 @@ app.config([
 		.when('/almoxprodutos',{
 			templateUrl: 'build/views/almoxproduto/list.html',
 			controller: 'AlmoxProdutoListController'
+		})
+		.when('/almoxproduto/new',{
+			templateUrl: 'build/views/almoxproduto/new.html',
+			controller: 'AlmoxProdutoNewController'
+		})
+		.when('/almoxproduto/:id/edit',{
+			templateUrl: 'build/views/almoxproduto/edit.html',
+			controller: 'AlmoxProdutoEditController'
+		})
+		.when('/almoxproduto/:id/remove',{
+			templateUrl: 'build/views/almoxproduto/remove.html',
+			controller: 'AlmoxProdutoRemoveController'
 		})
 		;
 

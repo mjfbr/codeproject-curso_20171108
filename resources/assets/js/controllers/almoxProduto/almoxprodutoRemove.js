@@ -1,12 +1,12 @@
 angular.module('app.controllers')
-	.controller('ProjectRemoveController',
-	['$scope','$location','$routeParams','Project',
-		function($scope, $location, $routeParams, Project){
-		$scope.project = Project.get({id:$routeParams.id});
+	.controller('AlmoxProdutoRemoveController',
+	['$scope','$location','$routeParams','AlmoxProduto',
+		function($scope, $location, $routeParams, AlmoxProduto){
+		$scope.almoxProdutos = AlmoxProduto.get({id:$routeParams.id});
 
 		$scope.remove = function(){
-			$scope.project.$delete({id: $scope.project.id}).then(function(){
-				$location.path('/projects/');
+			$scope.almoxProduto.$delete({id: $scope.almoxProduto.id}).then(function(){
+				$location.path('/almoxprodutos/');
 			});
 
 		}

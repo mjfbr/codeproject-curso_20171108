@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Exclusão de produto do almoxarifado</div>
+                <div class="panel-body">
+                    <p>Deseja excluir realmente este produto do almoxarifado?</p>
+                    <ul>
+                        <li><strong>Tipo: </strong>{{almoxProduto.tipo}}</li>
+                        <li><strong>Descrição: </strong>{{almoxProduto.descricao}}</li>
+                    </ul>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-danger" ng-click="remove()">Excluir</button>
+                            <a ng-href="javascript:window.history.go(-1)" class="btn btn-default"><span class="fa fa-arrow-left"></span> Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

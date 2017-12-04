@@ -1,0 +1,110 @@
+<!-- aula: Realizando primeiro cadastro de project -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Cadastro de Produtos de almoxarifado</div>
+                <div class="panel-body">
+
+                    <form class="form-horizontal" name="form" role="form" method="POST" ng-submit="save()">
+
+                        <div class="form-group" ng-class="{'has-error': !form.tipo.$valid && form.tipo.$touched}">
+                            <label class="col-md-4 control-label">Tipo de Produto</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="tipo" ng-model="project.tipo"
+                                    ng-options="o.value as o.label for o in status" required>
+                                    <option value="">-- Tipo de Produto --</option>
+                                    
+                                </select>
+                                <div ng-messages="form.tipo.$error" class="help-block" ng-show="form.tipo.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.descricao.$valid && form.descricao.$touched}">
+                            <label class="col-md-4 control-label">Descrição</label>
+
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="descricao" ng-model="project.descricao" required></textarea>
+                                <div ng-messages="form.descricao.$error" class="help-block" ng-show="form.descricao.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.unidade.$valid && form.unidade.$touched}">
+                            <label class="col-md-4 control-label">Unidade</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="unidade" ng-model="project.unidade" required>
+                                <div ng-messages="form.unidade.$error" class="help-block" ng-show="form.unidade.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.proporcao.$valid && form.proporcao.$touched}">
+                            <label class="col-md-4 control-label">Proporção</label>
+
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" name="proporcao" 
+                                ng-model="project.proporcao" min="0" max="9" required>
+                                <div ng-messages="form.proporcao.$error" class="help-block" ng-show="form.proporcao.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                    <div ng-message="min">Valor mínimo aceitável é 0</div>
+                                    <div ng-message="max">Valor máximo aceitável é 9</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.valor.$valid && form.valor.$touched}">
+                            <label class="col-md-4 control-label">Valor</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="valor" ng-model="project.valor" required>
+                                <div ng-messages="form.valor.$error" class="help-block" ng-show="form.valor.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.tmd.$valid && form.tmd.$touched}">
+                            <label class="col-md-4 control-label">Tmd</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="tmd" ng-model="project.tmd" required>
+                                <div ng-messages="form.tmd.$error" class="help-block" ng-show="form.tmd.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.barcode.$valid && form.barcode.$touched}">
+                            <label class="col-md-4 control-label">Barcode</label>
+
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="barcode" ng-model="project.barcode" required></textarea>
+                                <div ng-messages="form.barcode.$error" class="help-block" ng-show="form.barcode.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary ">Salvar</button>
+                                <a href="javascript:window.history.go(-1)" class="btn btn-primary">Voltar</a>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

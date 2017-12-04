@@ -26,7 +26,6 @@ class AlmoxProdutoRepositoryEloquent extends BaseRepository implements AlmoxProd
 	public function findOwner($userId, $limit = null, $columns = array()) {
         return $this->scopeQuery(function($query) use($userId) {
             return $query->select('crm_almox_produto.*')
-                ->where('id', '=', $userId)
                 ->orderBy('id', 'DESC');
         })->paginate($limit, $columns);
     }
